@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
-import classes from './auth-form.module.css';
+import { signIn } from 'next-auth/react';
 
+
+import classes from './auth-form.module.css';
 
 
 // ______________________________________________________________________
@@ -43,7 +45,12 @@ function AuthForm() {
     // * INFO: Add Validation
 
     if (isLogin) {
-      // Handle login
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: enteredEmail,
+        password: enteredPassword,
+      });
+      console.log("🪚 result LOGIN:", result);
     } else {
       // Handle signup
       try {
