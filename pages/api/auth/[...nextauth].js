@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 import { connectToDatabase } from "../../../lib/db";
 import { verifyPassword } from "../../../lib/auth";
@@ -11,14 +11,16 @@ export default NextAuth({
     strategy: "jwt",
   },
   providers: [
-    Providers.Credentials({
+    CredentialsProvider({
+      name: "Credentials",
       async authorize(credentials) {
         const client = await connectToDatabase();
-        const usersCollection = client.db().collection("users");
+        const usersCollection = client.db('auth-demo').collection("users");
 
         const user = await usersCollection.findOne({
           email: credentials.email,
         });
+
         if (!user) {
           client.close();
           throw new Error("No user found!");
@@ -29,7 +31,7 @@ export default NextAuth({
         );
         if (!isValid) {
           client.close();
-          throw new Error("Could not log you in!");
+          throw new Error("Could not log you in with this passsword!");
         }
         client.close();
 
