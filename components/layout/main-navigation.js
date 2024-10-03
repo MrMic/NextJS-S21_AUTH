@@ -8,7 +8,9 @@ function MainNavigation() {
 
   // ______________________________________________________________________
   function logoutHandler() {
-    signOut({ callbackUrl: 'http://localhost:3002' });
+    signOut({ redirect: false });
+    // window.location.href = 'http://localhost:3002/auth';
+
   }
 
 
