@@ -6,9 +6,6 @@ import { verifyPassword } from "../../../lib/auth";
 
 
 export default NextAuth({
-  auth: {
-    baseUrl: "http://localhost:3002",
-  },
   session: {
     // jwt: true
     strategy: "jwt",
