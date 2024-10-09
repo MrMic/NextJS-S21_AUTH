@@ -3,6 +3,7 @@ import { signIn } from 'next-auth/react';
 
 
 import classes from './auth-form.module.css';
+import { useRouter } from 'next/router';
 
 
 // ______________________________________________________________________
@@ -29,6 +30,7 @@ function AuthForm() {
   const passwordInputRef = useRef();
 
   const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
 
   // ______________________________________________________________________
   function switchAuthModeHandler() {
@@ -46,11 +48,15 @@ function AuthForm() {
 
     if (isLogin) {
       const result = await signIn('credentials', {
-        // redirect: false,
+        redirect: false,
         email: enteredEmail,
         password: enteredPassword,
       });
-      console.log("🪚 result LOGIN:", result);
+      // console.log("🪚 result LOGIN:", result);
+      if (!result.error) {
+        // Redirect to protected page
+        router.replace('/profile');
+      }
     } else {
       // Handle signup
       try {
