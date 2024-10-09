@@ -7,7 +7,7 @@ function UserProfile() {
   // useEffect(() => {
   //   getSession().then((session) => {
   //     if (!session) {
-  //       window.location.href = 'http://localhost:3002/auth';
+  //       window.location.href = '/auth';
   //     } else {
   //       setIsLoading(false);
   //     }
